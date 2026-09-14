@@ -4,6 +4,8 @@
 **Date:** 2026-09-05 — within the competition window.
 **Repository under work:** the private implementation repository. This public repository
 carries the design overview; the loop below was captured while building it.
+**Related:** [AI-DEV-LOG.md](AI-DEV-LOG.md) (*Failures and recovery*) and
+[TEST-HARNESS.md](TEST-HARNESS.md) (*Worked example*) describe this same loop.
 
 > Timestamps in the session log are **UTC**; `git log` timestamps are **local (UTC-3)**.
 > The same instant appears as `22:13:24Z` and `19:13:24` local.
@@ -67,7 +69,7 @@ npx vitest run 2>&1 | grep -E "Test Files|Tests |FAIL"
 
 ```
   ✓ tsc OK
-   FAIL  <test-file>
+   FAIL  runner/generate-test-plan.flows.test.ts
    Test Files  1 failed | 39 passed (40)
         Tests  352 passed (352)
 ```
@@ -117,7 +119,7 @@ Arriving **10 minutes 31 seconds after** the loop had already closed.
 ## Corroboration in git
 
 ```
-<commit>  2026-09-05 19:14:28  [commit message redacted]
+d25d22e  2026-09-05 19:14:28  [commit subject paraphrased — it embeds an internal issue key]
 ```
 
 Committed **40 seconds** after the re-verification passed (19:13:48 local → 19:14:28 local). The
@@ -167,6 +169,9 @@ not its internal reasoning trace. That text is verbatim from the log.
 
 ## Note on redaction
 
-Quoted human turns and the commit message have been replaced with bracketed summaries, and the
-session path, repository name and commit hash removed. Nothing in the loop itself — commands,
+Quoted human turns and the commit subject have been replaced with bracketed summaries, and the
+session path and repository name removed. Commit hashes and engine-internal file paths are kept
+deliberately: they carry no company, product, person or domain identity, and removing them would
+make the document unverifiable, which is the one property it needs. This matches the redaction
+standard used in AI-DEV-LOG.md and TEST-HARNESS.md. Nothing in the loop itself — commands,
 failure output, diagnosis, diff, test counts — has been altered.
