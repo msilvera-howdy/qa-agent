@@ -163,3 +163,42 @@ that is where you find out why.
 | [docs/DESIGN.md](docs/DESIGN.md) | Why it is built this way — the decisions and what they cost. |
 | [docs/PROMPTS.md](docs/PROMPTS.md) | The prompt design. This is where most of the engineering actually lives. |
 | [docs/SAMPLE-REPORT.md](docs/SAMPLE-REPORT.md) | What it hands back at the end of a run. |
+
+
+---
+
+## Running it
+
+The implementation is not published, so this section is a specification of what the tool requires rather than instructions you can follow from this repository.
+
+| Requirement | |
+| --- | --- |
+| Node.js | 24 or later |
+| Package manager | npm |
+| Build step | None. TypeScript sources run directly. |
+| Agent CLI | Installed and authenticated separately. Spawned as a subprocess, one per pipeline stage. |
+| Automation browser | Installed out-of-band from the pinned MCP package. |
+
+Three gates must pass before anything ships:
+
+| Gate | Command |
+| --- | --- |
+| Unit suite | npm test |
+| Type gate, no emit | npm run typecheck |
+| Documentation gate | npm run check:docs |
+
+The engine is invoked from the target repository's directory, not its own, so there are deliberately no npm scripts for the agent itself.
+
+**Configuration** is by environment variable: a model-provider credential, the base URL of the application under test, and either an identity-provider token or a bot account for authentication. Ticket mode additionally needs issue-tracker and code-host credentials. No values, defaults or examples appear anywhere in this repository.
+
+**External services**: a model provider, a browser-automation MCP server, and the application under test. Ticket mode also needs an issue tracker and a code host. The engine requires no database, no message broker, no container runtime and no cloud account. All state is files on disk.
+
+## Engineering documentation
+
+| Document | What is in it |
+| --- | --- |
+| docs/SPEC.md | Objective, requirements, constraints, architecture, definition of done. |
+| docs/SYSTEM.md | The agentic system map: agents, contexts, tool boundaries, parallel work. |
+| docs/AI-DEV-LOG.md | How this was built: iterations, failures, corrections, human decisions. |
+| docs/AUTONOMOUS-LOOP.md | A verbatim trace of a development loop that closed with no human instruction. |
+| docs/TEST-HARNESS.md | What the gates cover, and one of them catching a real defect. |
